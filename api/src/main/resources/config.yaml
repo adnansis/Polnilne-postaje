@@ -1,0 +1,10 @@
+kumuluzee:
+  name: polnilne-postaje
+  env:
+    name: dev
+  version: 1.0.0
+  datasources:
+    - jndi-name: jdbc/PolnilnePostajeDS
+      connection-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: postgres
