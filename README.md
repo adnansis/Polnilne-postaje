@@ -8,4 +8,6 @@ Za prevajanje aplikacije uporabimo ukaz: `mvn clean package`
 
 Za izvajanje dobljene .jar datoteke uporabimo ukaz: `java -jar .\api\target\api-1.0.0-SNAPSHOT.jar`
 
+## Podatkovni model
+
 ![Podatkovni model](MODEL.png "Podatkovni model")
