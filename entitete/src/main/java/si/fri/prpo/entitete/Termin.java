@@ -7,8 +7,8 @@ import java.sql.Timestamp;
 @NamedQueries(value = {
         @NamedQuery(name = "si.fri.prpo.polnilnepostaje.Termin.getAll", query = "SELECT t FROM termin t"),
         @NamedQuery(name = "si.fri.prpo.polnilnepostaje.Termin.findById", query = "SELECT t FROM termin t WHERE t.id_termin = :id_termin"),
-        @NamedQuery(name = "si.fri.prpo.polnilnepostaje.Termin.findByUsername", query = "SELECT t FROM termin t WHERE t.uporabnik.id_uporabnik = :id_uporabnik"),
-        @NamedQuery(name = "si.fri.prpo.polnilnepostaje.Termin.findByPostaja", query = "SELECT t FROM termin t WHERE t.postaja.id_postaja = :id_postaja"),
+        @NamedQuery(name = "si.fri.prpo.polnilnepostaje.Termin.findByUserID", query = "SELECT t FROM termin t WHERE t.uporabnik.id_uporabnik = :id_uporabnik"),
+        @NamedQuery(name = "si.fri.prpo.polnilnepostaje.Termin.findByPostajaID", query = "SELECT t FROM termin t WHERE t.postaja.id_postaja = :id_postaja"),
 })
 public class Termin {
     @Id
@@ -16,10 +16,10 @@ public class Termin {
     private Integer id_termin;
 
     @Column(name = "termin_od", nullable = false, unique = false)
-    private java.sql.Timestamp termin_od;
+    private Timestamp termin_od;
 
     @Column(name = "termin_do", nullable = false, unique = false)
-    private java.sql.Timestamp termin_do;
+    private Timestamp termin_do;
 
     @ManyToOne
     @JoinColumn(name = "ID_uporabnik")
@@ -67,5 +67,9 @@ public class Termin {
 
     public void setPostaja(Postaja postaja) {
         this.postaja = postaja;
+    }
+
+    public String toString() {
+        return getId_termin() + ":" + getTermin_od() + " " + getTermin_do() + " " + getPostaja().getId_postaja() + ":" + getUporabnik().getId_uporabnik();
     }
 }

@@ -1,0 +1,102 @@
+package si.fri.prpo.storitve.zrna;
+
+import si.fri.prpo.entitete.Postaja;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.Logger;
+
+@RequestScoped
+public class PostajeZrno {
+
+    @PersistenceContext(unitName = "polnilnepostaje")
+    private EntityManager em;
+
+    private UUID uuid = UUID.randomUUID();
+    private static Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
+
+    @PostConstruct
+    public void init() {
+        log.info("Zrno za entiteto Postaja se je ustvarilo. ID = " + this.uuid.toString());
+    }
+
+    @PreDestroy
+    public void destroy() {
+        log.info("Zrno za entiteto Postaja se je unicilo. ID = " + this.uuid.toString());
+    }
+
+    public List<Postaja> getPostaje() {
+
+        Query q = em.createNamedQuery("si.fri.prpo.polnilnepostaje.Postaja.getAll", Postaja.class);
+
+        List<Postaja> postaje = q.getResultList();
+
+        return postaje;
+    }
+
+    public Postaja getById(int id) {
+
+        Query q = em.createNamedQuery("si.fri.prpo.polnilnepostaje.Postaja.findById", Postaja.class);
+        q.setParameter("id_postaja", id);
+
+        Postaja p = (Postaja) q.getSingleResult();
+
+        return p;
+    }
+
+    public List<Postaja> getByUserId(String location) {
+
+        Query q = em.createNamedQuery("si.fri.prpo.polnilnepostaje.Postaja.findByLocation", Postaja.class);
+        q.setParameter("lokacija", location);
+
+        List<Postaja> postaje = q.getResultList();
+
+        return postaje;
+    }
+
+    public List<Postaja> getAllAvailable(int id) {
+
+        Query q = em.createNamedQuery("si.fri.prpo.polnilnepostaje.Postaja.getAllAvailable", Postaja.class);
+
+        List<Postaja> postaje = q.getResultList();
+
+        return postaje;
+    }
+
+    @Transactional
+    public boolean addPostaja(Postaja p) {
+
+        if(p != null) {
+            em.persist(p);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Transactional
+    public boolean updatePostaja(Postaja p) {
+
+        if(p != null) {
+            em.merge(p);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Transactional
+    public void removePostaja(int id) {
+
+        Postaja p = em.find(Postaja.class, id);
+        em.remove(p);
+    }
+}

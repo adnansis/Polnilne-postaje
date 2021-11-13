@@ -104,4 +104,10 @@ public class Postaja {
     public void setUporabnik(Uporabnik uporabnik) {
         this.uporabnik = uporabnik;
     }
+
+    public String toString() {
+        return getId_postaja() + ":" + getCena() + ":" + getIme() + ":" + getLokacija() + ":" +
+                getMoc() + ":" + getNa_voljo() + ":" + getObratuje_od() + ":" +
+                getObratuje_do() + ":" + getUporabnik().getId_uporabnik();
+    }
 }
