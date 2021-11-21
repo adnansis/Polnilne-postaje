@@ -1,12 +1,14 @@
 package si.fri.prpo.storitve.zrna;
 
 import si.fri.prpo.entitete.Postaja;
+import si.fri.prpo.storitve.anotacije.BeleziKlice;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+@BeleziKlice
 @RequestScoped
 public class PostajeZrno {
 
@@ -47,12 +50,18 @@ public class PostajeZrno {
         Query q = em.createNamedQuery("si.fri.prpo.polnilnepostaje.Postaja.findById", Postaja.class);
         q.setParameter("id_postaja", id);
 
-        Postaja p = (Postaja) q.getSingleResult();
+        Postaja p;
+
+        try {
+            p = (Postaja) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
 
         return p;
     }
 
-    public List<Postaja> getByUserId(String location) {
+    public List<Postaja> getByLocation(String location) {
 
         Query q = em.createNamedQuery("si.fri.prpo.polnilnepostaje.Postaja.findByLocation", Postaja.class);
         q.setParameter("lokacija", location);
@@ -94,9 +103,15 @@ public class PostajeZrno {
     }
 
     @Transactional
-    public void removePostaja(int id) {
+    public boolean removePostaja(int id) {
 
         Postaja p = em.find(Postaja.class, id);
-        em.remove(p);
+
+        if(p != null) {
+            em.remove(p);
+            return true;
+        }
+
+        return false;
     }
 }

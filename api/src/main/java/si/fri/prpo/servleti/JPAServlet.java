@@ -1,4 +1,4 @@
-package si.fri.prpo.api;
+package si.fri.prpo.servleti;
 
 import si.fri.prpo.entitete.Postaja;
 import si.fri.prpo.entitete.Termin;
@@ -44,22 +44,6 @@ public class JPAServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         PrintWriter w = resp.getWriter();
-
-        Uporabnik u1 = new Uporabnik();
-        u1.setUporabnisko_ime("elonmusk");
-        u1.setTip("lastnik");
-
-        Uporabnik u2 = new Uporabnik();
-        u2.setUporabnisko_ime("billgates");
-        u2.setTip("uporabnik");
-
-        Uporabnik u3 = new Uporabnik();
-        u3.setUporabnisko_ime("jeffbezos");
-        u3.setTip("uporabnik");
-
-        uporabnikiZrno.addUporabnik(u1);
-        uporabnikiZrno.addUporabnik(u2);
-        uporabnikiZrno.addUporabnik(u3);
 
         uporabniki = uporabnikiZrno.getUporabniki();
 
@@ -107,22 +91,6 @@ public class JPAServlet extends HttpServlet {
 
         w.println("-------------------------------------");
 
-        // priprava podatkov
-        Postaja postaja = new Postaja();
-        postaja.setId_postaja(1);
-        postaja.setUporabnik(u1);
-        postaja.setLokacija("Večna pot 113");
-        postaja.setIme("TYPE 2");
-        postaja.setMoc(22.0);
-        Time time_od = Time.valueOf("00:00:00");
-        Time time_do = Time.valueOf("23:59:59");
-        postaja.setObratuje_od(time_od);
-        postaja.setObratuje_do(time_do);
-        postaja.setCena(0.15);
-        postaja.setNa_voljo(true);
-        postajeZrno.addPostaja(postaja);
-        // konec priprave
-
         DodajTerminDTO dodajTerminDTO = new DodajTerminDTO();
         dodajTerminDTO.setId_uporabnik(4);
         dodajTerminDTO.setId_postaja(1);
@@ -160,7 +128,7 @@ public class JPAServlet extends HttpServlet {
             // posodobimo zapis v bazi ??
         }
 
-        // vrne false, ker je termin čez eno uros
+        // vrne false, ker je termin čez eno uro
         termin_od = new Timestamp(System.currentTimeMillis() + 3600000);
         preveriNaVoljoDTO.setTermin_od(termin_od);
 

@@ -2,6 +2,7 @@ package si.fri.prpo.storitve.zrna;
 
 import si.fri.prpo.entitete.Termin;
 import si.fri.prpo.entitete.Uporabnik;
+import si.fri.prpo.storitve.anotacije.BeleziKlice;
 import si.fri.prpo.storitve.dtos.CenaPolnjenjaDTO;
 import si.fri.prpo.storitve.dtos.DodajTerminDTO;
 import si.fri.prpo.storitve.dtos.PreveriNaVoljoDTO;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+@BeleziKlice
 @ApplicationScoped
 public class UpravljanjePolnilnihPostajZrno {
 

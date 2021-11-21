@@ -1,5 +1,6 @@
 package si.fri.prpo.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +21,11 @@ public class Uporabnik {
 
     private String uporabnisko_ime;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "uporabnik", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Postaja> postaje = new ArrayList<>();
 
-    @OneToMany(mappedBy = "uporabnik", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Termin> rezervacije = new ArrayList<>();
-
+    @JsonbTransient
     @OneToMany(mappedBy = "uporabnik", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Termin> termini = new ArrayList<>();
 

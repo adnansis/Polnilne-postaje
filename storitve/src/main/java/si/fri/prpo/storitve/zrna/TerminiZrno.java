@@ -1,6 +1,7 @@
 package si.fri.prpo.storitve.zrna;
 
 import si.fri.prpo.entitete.Termin;
+import si.fri.prpo.storitve.anotacije.BeleziKlice;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+@BeleziKlice
 @RequestScoped
 public class TerminiZrno {
 
@@ -95,9 +97,15 @@ public class TerminiZrno {
     }
 
     @Transactional
-    public void removeTermin(int id) {
+    public boolean removeTermin(int id) {
 
         Termin t = em.find(Termin.class, id);
-        em.remove(t);
+
+        if(t != null) {
+            em.remove(t);
+            return true;
+        }
+
+        return false;
     }
 }

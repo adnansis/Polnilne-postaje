@@ -1,10 +1,10 @@
 package si.fri.prpo.storitve.zrna;
 
 import si.fri.prpo.entitete.Uporabnik;
+import si.fri.prpo.storitve.anotacije.BeleziKlice;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+@BeleziKlice
 @RequestScoped
 public class UporabnikiZrno {
 
@@ -95,9 +96,15 @@ public class UporabnikiZrno {
     }
 
     @Transactional
-    public void removeUporabnik(int id) {
+    public boolean removeUporabnik(int id) {
 
         Uporabnik u = em.find(Uporabnik.class, id);
-        em.remove(u);
+
+        if(u != null) {
+            em.remove(u);
+            return true;
+        }
+
+        return false;
     }
 }
