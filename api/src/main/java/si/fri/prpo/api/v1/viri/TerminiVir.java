@@ -1,5 +1,6 @@
 package si.fri.prpo.api.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.entitete.Postaja;
 import si.fri.prpo.entitete.Termin;
 import si.fri.prpo.storitve.zrna.TerminiZrno;
@@ -7,8 +8,10 @@ import si.fri.prpo.storitve.zrna.TerminiZrno;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @ApplicationScoped
@@ -17,19 +20,22 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class TerminiVir {
 
+    @Context
+    protected UriInfo uriInfo;
+
     @Inject
     private TerminiZrno terminiZrno;
 
     @GET
     public Response pridobiTermine() {
 
-        List<Termin> termini = terminiZrno.getTermini();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        Long terminiCount = terminiZrno.getTerminiCount(query);
 
-        if(termini != null) {
-            return Response.ok(termini).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        return Response
+                .ok(terminiZrno.getTermini(query))
+                .header("X-Total-Count", terminiCount)
+                .build();
     }
 
     @GET

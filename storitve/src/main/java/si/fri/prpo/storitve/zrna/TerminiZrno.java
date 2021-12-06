@@ -1,5 +1,8 @@
 package si.fri.prpo.storitve.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.prpo.entitete.Postaja;
 import si.fri.prpo.entitete.Termin;
 import si.fri.prpo.storitve.anotacije.BeleziKlice;
 
@@ -42,6 +45,15 @@ public class TerminiZrno {
         List<Termin> termini = q.getResultList();
 
         return termini;
+    }
+
+    public List<Termin> getTermini(QueryParameters query) {
+
+        return JPAUtils.queryEntities(em, Termin.class, query);
+    }
+
+    public Long getTerminiCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Termin.class, query);
     }
 
     public Termin getById(int id) {

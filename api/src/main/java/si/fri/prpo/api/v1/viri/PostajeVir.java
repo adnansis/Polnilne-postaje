@@ -1,13 +1,17 @@
 package si.fri.prpo.api.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.entitete.Postaja;
+import si.fri.prpo.entitete.Uporabnik;
 import si.fri.prpo.storitve.zrna.PostajeZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @ApplicationScoped
@@ -16,19 +20,22 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class PostajeVir {
 
+    @Context
+    protected UriInfo uriInfo;
+
     @Inject
     private PostajeZrno postajeZrno;
 
     @GET
     public Response pridobiPostaje() {
 
-        List<Postaja> postaje = postajeZrno.getPostaje();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        Long postajeCount = postajeZrno.getPostajeCount(query);
 
-        if(postaje != null) {
-            return Response.ok(postaje).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        return Response
+                .ok(postajeZrno.getPostaje(query))
+                .header("X-Total-Count", postajeCount)
+                .build();
     }
 
     @GET

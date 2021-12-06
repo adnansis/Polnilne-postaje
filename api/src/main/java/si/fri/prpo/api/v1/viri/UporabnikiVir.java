@@ -1,13 +1,16 @@
 package si.fri.prpo.api.v1.viri;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
 import si.fri.prpo.entitete.Uporabnik;
 import si.fri.prpo.storitve.zrna.UporabnikiZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @ApplicationScoped
@@ -16,19 +19,22 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class UporabnikiVir {
 
+    @Context
+    protected UriInfo uriInfo;
+
     @Inject
     private UporabnikiZrno uporabnikiZrno;
 
     @GET
     public Response pridobiUporabnike() {
 
-        List<Uporabnik> uporabniki = uporabnikiZrno.getUporabniki();
+        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
+        Long uporabnikiCount = uporabnikiZrno.getUporabnikiCount(query);
 
-        if(uporabniki != null) {
-            return Response.ok(uporabniki).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        return Response
+                .ok(uporabnikiZrno.getUporabniki(query))
+                .header("X-Total-Count", uporabnikiCount)
+                .build();
     }
 
     @GET
