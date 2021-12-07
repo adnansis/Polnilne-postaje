@@ -1,11 +1,16 @@
 package si.fri.prpo.storitve.dtos;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import java.sql.Timestamp;
 
+@Schema(name = "PreveriNaVoljoDTO", implementation = PreveriNaVoljoDTO.class)
 public class PreveriNaVoljoDTO {
 
+    @Schema(required = true, example = "2021-12-01 10:00:00")
     private Timestamp termin_od;
 
+    @Schema(required = true, example = "2021-12-01 12:00:00")
     private Timestamp termin_do;
 
     public Timestamp getTermin_od() {

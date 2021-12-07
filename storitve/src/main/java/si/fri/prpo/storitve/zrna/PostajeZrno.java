@@ -1,6 +1,9 @@
 package si.fri.prpo.storitve.zrna;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.entitete.Postaja;
+import si.fri.prpo.entitete.Uporabnik;
 import si.fri.prpo.storitve.anotacije.BeleziKlice;
 
 import javax.annotation.PostConstruct;
@@ -43,6 +46,14 @@ public class PostajeZrno {
         List<Postaja> postaje = q.getResultList();
 
         return postaje;
+    }
+
+    public List<Postaja> getPostaje(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Postaja.class, query);
+    }
+
+    public Long getPostajeCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Postaja.class, query);
     }
 
     public Postaja getById(int id) {

@@ -6,6 +6,7 @@ import si.fri.prpo.storitve.anotacije.BeleziKlice;
 import si.fri.prpo.storitve.dtos.CenaPolnjenjaDTO;
 import si.fri.prpo.storitve.dtos.DodajTerminDTO;
 import si.fri.prpo.storitve.dtos.PreveriNaVoljoDTO;
+import si.fri.prpo.storitve.izjeme.NeveljavenTerminDtoIzjema;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -45,6 +46,13 @@ public class UpravljanjePolnilnihPostajZrno {
         Termin termin = null;
 
         Timestamp current_time = new Timestamp(System.currentTimeMillis());
+
+        if(dodajTerminDTO.getId_postaja() <= 0 || dodajTerminDTO.getTermin_do() == null || dodajTerminDTO.getTermin_od() == null ||
+            dodajTerminDTO.getId_uporabnik() <= 0) {
+            String msg = "Podan termin ne vsebuje vseh obveznih podatkov!";
+            log.severe(msg);
+            throw new NeveljavenTerminDtoIzjema(msg);
+        }
 
         if(uporabnik != null) {
 

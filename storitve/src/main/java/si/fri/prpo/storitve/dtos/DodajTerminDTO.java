@@ -1,15 +1,22 @@
 package si.fri.prpo.storitve.dtos;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import java.sql.Timestamp;
 
+@Schema(name = "DodajTerminDTO", implementation = DodajTerminDTO.class)
 public class DodajTerminDTO {
 
+    @Schema(required = true, example = "1")
     private int id_uporabnik;
 
+    @Schema(required = true, example = "1")
     private int id_postaja;
 
+    @Schema(required = true, example = "2021-12-01 10:00:00")
     private Timestamp termin_od;
 
+    @Schema(required = true, example = "2021-12-01 12:00:00")
     private Timestamp termin_do;
 
     public int getId_uporabnik() {

@@ -1,13 +1,19 @@
 package si.fri.prpo.storitve.dtos;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import java.sql.Timestamp;
 
+@Schema(name = "CenaPolnjenjaDTO", implementation = CenaPolnjenjaDTO.class)
 public class CenaPolnjenjaDTO {
 
+    @Schema(required = true, example = "2021-12-01 10:00:00")
     private Timestamp termin_od;
 
+    @Schema(required = true, example = "2021-12-01 12:00:00")
     private Timestamp termin_do;
 
+    @Schema(required = true, example = "0.35")
     private Double cena;
 
     public Timestamp getTermin_od() {
