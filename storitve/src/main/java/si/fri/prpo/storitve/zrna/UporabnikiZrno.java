@@ -2,6 +2,7 @@ package si.fri.prpo.storitve.zrna;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import si.fri.prpo.entitete.Postaja;
 import si.fri.prpo.entitete.Uporabnik;
 import si.fri.prpo.storitve.anotacije.BeleziKlice;
 
