@@ -2,6 +2,7 @@ package si.fri.prpo.entitete;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.List;
 
 @Entity(name = "postaja")
 @NamedQueries(value = {
@@ -28,6 +29,9 @@ public class Postaja {
     private Double cena;
 
     private Boolean na_voljo;
+
+    @Transient
+    private String porocilo;
 
     @ManyToOne
     @JoinColumn(name = "ID_uporabnik")
@@ -103,6 +107,14 @@ public class Postaja {
 
     public void setUporabnik(Uporabnik uporabnik) {
         this.uporabnik = uporabnik;
+    }
+
+    public String getPorocilo() {
+        return porocilo;
+    }
+
+    public void setPorocilo(String porocilo) {
+        this.porocilo = porocilo;
     }
 
     public String toString() {

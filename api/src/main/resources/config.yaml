@@ -11,3 +11,16 @@ kumuluzee:
   dev:
     scan-libraries:
       - entitete
+  security:
+    keycloak:
+      json: '{
+          "realm": "polnilnepostaje-realm",
+          "bearer-only": true,
+          "auth-server-url": "http://localhost:8082/auth/",
+          "ssl-required": "external",
+          "resource": "polnilnepostaje-api",
+          "confidential-port": 0
+        }'
+integrations:
+  porocilni-sistem:
+    base-url: http://localhost:8081/v1

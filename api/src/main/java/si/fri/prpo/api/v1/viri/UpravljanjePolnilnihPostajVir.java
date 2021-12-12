@@ -1,5 +1,6 @@
 package si.fri.prpo.api.v1.viri;
 
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -12,13 +13,11 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.prpo.entitete.Postaja;
 import si.fri.prpo.entitete.Termin;
 import si.fri.prpo.entitete.Uporabnik;
-import si.fri.prpo.storitve.dtos.DodajTerminDTO;
+import si.fri.prpo.storitve.dtos.*;
 import si.fri.prpo.storitve.zrna.PostajeZrno;
 import si.fri.prpo.storitve.zrna.TerminiZrno;
 import si.fri.prpo.storitve.zrna.UpravljanjePolnilnihPostajZrno;
-import si.fri.prpo.storitve.dtos.CenaPolnjenjaDTO;
 import si.fri.prpo.storitve.dtos.DodajTerminDTO;
-import si.fri.prpo.storitve.dtos.PreveriNaVoljoDTO;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -29,6 +28,7 @@ import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Secure
 @ApplicationScoped
 @Path("upravljanje")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -135,4 +135,5 @@ public class UpravljanjePolnilnihPostajVir {
         return Response.status(Response.Status.OK).entity(cena).build();
 
     }
+
 }

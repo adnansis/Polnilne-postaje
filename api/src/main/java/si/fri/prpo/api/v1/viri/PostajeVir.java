@@ -1,6 +1,7 @@
 package si.fri.prpo.api.v1.viri;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.security.annotations.Secure;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -24,6 +25,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+//@Secure
 @ApplicationScoped
 @Path("postaje")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -42,7 +44,7 @@ public class PostajeVir {
                     content = @Content(schema = @Schema(implementation = Postaja.class, type = SchemaType.ARRAY)),
                     headers = @Header(name = "X-Total-Count", description = "Število vrnjenih postaj."))
     })
-    @RolesAllowed("user")
+    //@RolesAllowed({"user"})
     @GET
     public Response pridobiPostaje() {
 
@@ -60,7 +62,7 @@ public class PostajeVir {
             @APIResponse(responseCode = "200", description = "Podrobnosti postaje.",
                     content = @Content(schema = @Schema(implementation = Postaja.class))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("{id}")
     public Response pridobiPostajoById(@Parameter(
@@ -81,7 +83,7 @@ public class PostajeVir {
             @APIResponse(responseCode = "200", description = "Seznam postaj.",
                     content = @Content(schema = @Schema(implementation = Postaja.class, type = SchemaType.ARRAY))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("lokacije/{lokacija}")
     public Response pridobiPostajoByLocation(@Parameter(
@@ -102,7 +104,7 @@ public class PostajeVir {
             @APIResponse(responseCode = "200", description = "Seznam postaj.",
                     content = @Content(schema = @Schema(implementation = Postaja.class, type = SchemaType.ARRAY))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("navoljo/{id}")
     public Response pridobiNaVoljo(@Parameter(
@@ -123,7 +125,7 @@ public class PostajeVir {
             @APIResponse(responseCode = "201", description = "Postaja uspešno dodana."),
             @APIResponse(responseCode = "405", description = "Validacijska napaka.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @POST
     public Response dodajPostajo(@RequestBody(
             description = "DTO objekt za dodajanje postaje.",
@@ -143,7 +145,7 @@ public class PostajeVir {
             @APIResponse(responseCode = "201", description = "Postaja uspešno posodobljena."),
             @APIResponse(responseCode = "405", description = "Validacijska napaka.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @PUT
     public Response posodobiPostajo(@RequestBody(
             description = "DTO objekt za posodabljanje postaje.",
@@ -164,7 +166,7 @@ public class PostajeVir {
             @APIResponse(responseCode = "404", description = "Uporabnik ne obstaja.")
     })
     @DELETE
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @Path("{id}")
     public Response izbrisiPostajo(@Parameter(
             description = "Identifikator postaje za brisanje.",

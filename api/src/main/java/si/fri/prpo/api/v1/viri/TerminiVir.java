@@ -25,6 +25,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+//@Secure
 @ApplicationScoped
 @Path("termini")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -43,7 +44,7 @@ public class TerminiVir {
                     content = @Content(schema = @Schema(implementation = Termin.class, type = SchemaType.ARRAY)),
                     headers = @Header(name = "X-Total-Count", description = "Število vrnjenih terminov."))
     })
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     public Response pridobiTermine() {
 
@@ -61,7 +62,7 @@ public class TerminiVir {
             @APIResponse(responseCode = "200", description = "Podrobnosti termina.",
                     content = @Content(schema = @Schema(implementation = Termin.class))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("{id}")
     public Response pridobiTermin(@Parameter(
@@ -82,7 +83,7 @@ public class TerminiVir {
             @APIResponse(responseCode = "200", description = "Seznam terminov.",
                     content = @Content(schema = @Schema(implementation = Termin.class, type = SchemaType.ARRAY))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("uporabniki/{id}")
     public Response pridobiTermineUporabnikId(@Parameter(
@@ -103,7 +104,7 @@ public class TerminiVir {
             @APIResponse(responseCode = "200", description = "Seznam terminov.",
                     content = @Content(schema = @Schema(implementation = Termin.class, type = SchemaType.ARRAY))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("postaje/{id}")
     public Response pridobiTerminePostajaId(@Parameter(
@@ -124,7 +125,7 @@ public class TerminiVir {
             @APIResponse(responseCode = "201", description = "Termin uspešno dodan."),
             @APIResponse(responseCode = "405", description = "Validacijska napaka.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @POST
     public Response dodajTermin(@RequestBody(
             description = "DTO objekt za dodajanje termina.",
@@ -144,7 +145,7 @@ public class TerminiVir {
             @APIResponse(responseCode = "201", description = "Termin uspešno posodobljen."),
             @APIResponse(responseCode = "405", description = "Validacijska napaka.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @PUT
     public Response posodobiTermin(@RequestBody(
             description = "DTO objekt za posodabljanje terminov.",
@@ -164,7 +165,7 @@ public class TerminiVir {
             @APIResponse(responseCode = "200", description = "Termin uspešno izbrisan."),
             @APIResponse(responseCode = "404", description = "Termin ne obstaja.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @DELETE
     @Path("{id}")
     public Response izbrisiTermin(@Parameter(

@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+//@Secure
 @ApplicationScoped
 @Path("uporabniki")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -41,7 +42,7 @@ public class UporabnikiVir {
                 content = @Content(schema = @Schema(implementation = Uporabnik.class, type = SchemaType.ARRAY)),
                 headers = @Header(name = "X-Total-Count", description = "Število vrnjenih uporabnikov."))
     })
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     public Response pridobiUporabnike() {
 
@@ -59,7 +60,7 @@ public class UporabnikiVir {
             @APIResponse(responseCode = "200", description = "Podrobnosti uporabnika.",
                     content = @Content(schema = @Schema(implementation = Uporabnik.class))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("{id}")
     public Response pridobiUporabnika(@Parameter(
@@ -80,7 +81,7 @@ public class UporabnikiVir {
             @APIResponse(responseCode = "200", description = "Podrobnosti uporabnika.",
                     content = @Content(schema = @Schema(implementation = Uporabnik.class))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("uporabniskaimena/{username}")
     public Response pridobiUporabnika(@Parameter(
@@ -101,7 +102,7 @@ public class UporabnikiVir {
             @APIResponse(responseCode = "200", description = "Seznam uporabnikov.",
                     content = @Content(schema = @Schema(implementation = Uporabnik.class, type = SchemaType.ARRAY))
             )})
-    @RolesAllowed("user")
+    //@RolesAllowed("user")
     @GET
     @Path("tipi/{type}")
     public Response pridobiUporabnikeByType(@Parameter(
@@ -122,7 +123,7 @@ public class UporabnikiVir {
             @APIResponse(responseCode = "201", description = "Uporabnik uspešno dodan."),
             @APIResponse(responseCode = "405", description = "Validacijska napaka.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @POST
     public Response dodajUporabnika(@RequestBody(
             description = "DTO objekt za dodajanje uporabnika.",
@@ -142,7 +143,7 @@ public class UporabnikiVir {
             @APIResponse(responseCode = "201", description = "Uporabnik uspešno posodobljen."),
             @APIResponse(responseCode = "405", description = "Validacijska napaka.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @PUT
     public Response posodobiUporabnika(@RequestBody(
             description = "DTO objekt za posodabljanje uporabnika.",
@@ -162,7 +163,7 @@ public class UporabnikiVir {
             @APIResponse(responseCode = "200", description = "Uporabnik uspešno izbrisan."),
             @APIResponse(responseCode = "404", description = "Uporabnik ne obstaja.")
     })
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @DELETE
     @Path("{id}")
     public Response izbrisiUporabnika(@Parameter(

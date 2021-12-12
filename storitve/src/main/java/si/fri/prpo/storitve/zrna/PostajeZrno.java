@@ -1,10 +1,12 @@
 package si.fri.prpo.storitve.zrna;
 
+import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.entitete.Postaja;
 import si.fri.prpo.entitete.Uporabnik;
 import si.fri.prpo.storitve.anotacije.BeleziKlice;
+import si.fri.prpo.storitve.dtos.PorociloDTO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -15,6 +17,15 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -29,9 +40,17 @@ public class PostajeZrno {
     private UUID uuid = UUID.randomUUID();
     private static Logger log = Logger.getLogger(UporabnikiZrno.class.getName());
 
+    private Client httpClient;
+    private String baseUrl;
+
     @PostConstruct
     public void init() {
         log.info("Zrno za entiteto Postaja se je ustvarilo. ID = " + this.uuid.toString());
+
+        httpClient = ClientBuilder.newClient();
+        baseUrl = ConfigurationUtil.getInstance()
+                .get("integrations.porocilni-sistem.base-url")
+                .orElse("http://localhost:8081/v1");
     }
 
     @PreDestroy
@@ -49,7 +68,20 @@ public class PostajeZrno {
     }
 
     public List<Postaja> getPostaje(QueryParameters query) {
-        return JPAUtils.queryEntities(em, Postaja.class, query);
+
+        List<PorociloDTO> porocila = pridobiPorocila();
+
+        List<Postaja> postaje = JPAUtils.queryEntities(em, Postaja.class, query);
+
+        for(Postaja postaja: postaje) {
+            for(PorociloDTO porocilo: porocila) {
+                if(postaja.getId_postaja() == porocilo.getPostaja_id()) {
+                    postaja.setPorocilo(porocilo.porociloToString());
+                }
+            }
+        }
+
+        return postaje;
     }
 
     public Long getPostajeCount(QueryParameters query) {
@@ -124,5 +156,19 @@ public class PostajeZrno {
         }
 
         return false;
+    }
+
+    private List<PorociloDTO> pridobiPorocila() {
+
+        try{
+            return httpClient
+                    .target(baseUrl + "/porocila")
+                    .request()
+                    .get(new GenericType<List<PorociloDTO>>() {});
+        } catch (WebApplicationException | ProcessingException e) {
+            log.severe(e.getMessage());
+            throw new InternalServerErrorException(e);
+        }
+
     }
 }
