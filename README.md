@@ -2270,4 +2270,4 @@ Za izvajanje dobljene .jar datoteke uporabimo ukaz: `java -jar .\api\target\api-
 * Z orodjem curl pridobimo token za avtentikacijo: `curl -X POST http://localhost:8082/auth/realms/polnilnepostaje-realm/protocol/openid-connect/token -H 'content-type: application/x-www-form-urlencoded' -d 'grant_type=password&client_id=polnilnepostaje-app&username=admin&password=admin'
   `
 * Naredimo request v orodju curl ali Postman z ustrezimi parametri:
-`curl -X GET http://localhost:8080/v1/upravljanje/postaje/1 -H 'authorization: Bearer >>TOKEN<< -H 'content-type: application/json'`
+`curl -X GET http://localhost:8080/v1/upravljanje/postaje/1 -H 'authorization: Bearer >>TOKEN GOES HERE<<' -H 'content-type: application/json'`
