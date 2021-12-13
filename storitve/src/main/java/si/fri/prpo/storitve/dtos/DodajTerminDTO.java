@@ -13,10 +13,10 @@ public class DodajTerminDTO {
     @Schema(required = true, example = "1")
     private int id_postaja;
 
-    @Schema(required = true, example = "2021-12-01 10:00:00")
+    @Schema(required = true, example = "2021-12-01T10:00:00Z")
     private Timestamp termin_od;
 
-    @Schema(required = true, example = "2021-12-01 12:00:00")
+    @Schema(required = true, example = "2021-12-01T12:00:00Z")
     private Timestamp termin_do;
 
     public int getId_uporabnik() {
