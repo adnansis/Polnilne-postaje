@@ -1,14 +1,14 @@
 package si.fri.prpo.storitve.dtos;
 
-public class PorociloDTO {
+public class SporociloDTO {
 
     private String sporocilo;
     private Integer postaja_id;
     private String datetime;
 
-    public PorociloDTO() {}
+    public SporociloDTO() {}
 
-    public PorociloDTO(String sporocilo, Integer postaja_id, String datetime) {
+    public SporociloDTO(String sporocilo, Integer postaja_id, String datetime) {
         this.sporocilo = sporocilo;
         this.postaja_id = postaja_id;
         this.datetime = datetime;

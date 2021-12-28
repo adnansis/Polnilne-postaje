@@ -68,6 +68,12 @@
             <artifactId>keycloak-jetty94-adapter</artifactId>
             <version>15.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.health</groupId>
+            <artifactId>kumuluzee-health</artifactId>
+            <version>2.4.3</version>
+        </dependency>
     </dependencies>
 
     <build>

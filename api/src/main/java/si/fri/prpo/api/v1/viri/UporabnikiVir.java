@@ -39,8 +39,8 @@ public class UporabnikiVir {
     @Operation(description = "Vrne seznam uporabnikov.", summary = "Seznam uporabnikov.")
     @APIResponses({
             @APIResponse(responseCode = "200", description = "Seznam uporabnikov.",
-                content = @Content(schema = @Schema(implementation = Uporabnik.class, type = SchemaType.ARRAY)),
-                headers = @Header(name = "X-Total-Count", description = "Število vrnjenih uporabnikov."))
+                    content = @Content(schema = @Schema(implementation = Uporabnik.class, type = SchemaType.ARRAY)),
+                    headers = @Header(name = "X-Total-Count", description = "Število vrnjenih uporabnikov."))
     })
     //@RolesAllowed("user")
     @GET

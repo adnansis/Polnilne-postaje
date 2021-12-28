@@ -5,7 +5,7 @@ kumuluzee:
   version: 1.0.0
   datasources:
     - jndi-name: jdbc/PolnilnePostajeDS
-      connection-url: jdbc:postgresql://localhost:5432/postgres
+      connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
       username: postgres
       password: postgres
   dev:
@@ -16,11 +16,17 @@ kumuluzee:
       json: '{
           "realm": "polnilnepostaje-realm",
           "bearer-only": true,
-          "auth-server-url": "http://localhost:8082/auth/",
+          "auth-server-url": "http://host.docker.internal:8082/auth/",
           "ssl-required": "external",
           "resource": "polnilnepostaje-api",
           "confidential-port": 0
         }'
+  health:
+    checks:
+      data-source-health-check:
+        connection-url: jdbc:postgresql://host.docker.internal:5432/postgres
+        username: postgres
+        password: postgres
 integrations:
   porocilni-sistem:
-    base-url: http://localhost:8081/v1
+    base-url: http://host.docker.internal:8081/v1

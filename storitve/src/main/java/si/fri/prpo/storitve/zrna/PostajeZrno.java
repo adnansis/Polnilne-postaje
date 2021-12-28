@@ -4,13 +4,11 @@ import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.entitete.Postaja;
-import si.fri.prpo.entitete.Uporabnik;
 import si.fri.prpo.storitve.anotacije.BeleziKlice;
-import si.fri.prpo.storitve.dtos.PorociloDTO;
+import si.fri.prpo.storitve.dtos.SporociloDTO;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -22,10 +20,7 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -69,12 +64,12 @@ public class PostajeZrno {
 
     public List<Postaja> getPostaje(QueryParameters query) {
 
-        List<PorociloDTO> porocila = pridobiPorocila();
+        List<SporociloDTO> porocila = pridobiSporocila();
 
         List<Postaja> postaje = JPAUtils.queryEntities(em, Postaja.class, query);
 
         for(Postaja postaja: postaje) {
-            for(PorociloDTO porocilo: porocila) {
+            for(SporociloDTO porocilo: porocila) {
                 if(postaja.getId_postaja() == porocilo.getPostaja_id()) {
                     postaja.setPorocilo(porocilo.porociloToString());
                 }
@@ -158,13 +153,13 @@ public class PostajeZrno {
         return false;
     }
 
-    private List<PorociloDTO> pridobiPorocila() {
+    private List<SporociloDTO> pridobiSporocila() {
 
         try{
             return httpClient
-                    .target(baseUrl + "/porocila")
+                    .target(baseUrl + "/sporocila")
                     .request()
-                    .get(new GenericType<List<PorociloDTO>>() {});
+                    .get(new GenericType<List<SporociloDTO>>() {});
         } catch (WebApplicationException | ProcessingException e) {
             log.severe(e.getMessage());
             throw new InternalServerErrorException(e);
