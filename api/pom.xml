@@ -74,6 +74,12 @@
             <artifactId>kumuluzee-health</artifactId>
             <version>2.4.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.cors</groupId>
+            <artifactId>kumuluzee-cors</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 
     <build>

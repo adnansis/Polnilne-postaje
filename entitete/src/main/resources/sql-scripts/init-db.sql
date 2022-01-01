@@ -7,4 +7,5 @@ INSERT INTO postaja (id_uporabnik, lokacija, ime, moc, obratuje_od, obratuje_do,
 INSERT INTO postaja (id_uporabnik, lokacija, ime, moc, obratuje_od, obratuje_do, cena, na_voljo) VALUES (1, 'Večna pot 113', 'TYPE 2 Tesla', 150.0, '00:00:00', '23:59:59', 0.9, TRUE);
 
 INSERT INTO termin (id_uporabnik, id_postaja, termin_od, termin_do) VALUES (1, 2, '2021-12-01 10:00:00', '2021-12-01 11:30:00');
-INSERT INTO termin (id_uporabnik, id_postaja, termin_od, termin_do) VALUES (1, 2, '2021-12-05 10:00:00', '2021-12-01 11:30:00');
+INSERT INTO termin (id_uporabnik, id_postaja, termin_od, termin_do) VALUES (1, 2, '2021-12-05 10:00:00', '2021-12-05 11:30:00');
+INSERT INTO termin (id_uporabnik, id_postaja, termin_od, termin_do) VALUES (1, 3, '2021-12-06 20:00:00', '2021-12-06 22:30:00');
